@@ -57,4 +57,10 @@ public class Drone {
     public void setDrones(List<Drone> drones) {
         this.drones = drones;
     }
+    public enum ResultadoDroneEnum{
+        VELOCIDAD_NO_VALIDA,
+        ID_NO_VALIDO,
+        DRONE_INEXISTENTE,
+        INICIADA;
+    }
 }
