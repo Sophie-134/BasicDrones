@@ -1,5 +1,7 @@
 package ar.com.proyecto.basicwardrobe.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,9 @@ public class DroneService {
         return ResultadoDroneEnum.ID_NO_VALIDO;
     }*/
     return ResultadoDroneEnum.INICIADA;
+    }
 
-
+    public List<Drone> listAll() {
+        return droneRepo.findAll();
     }
 }
