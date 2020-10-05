@@ -1,8 +1,10 @@
 package ar.com.proyecto.basicwardrobe.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,7 @@ public class DroneController {
     @Autowired
     DroneService droneService;
 
-    @PostMapping("/drone")
+    @PostMapping("/drones")
     public ResponseEntity<GenericResponse> create(@RequestBody DroneRequest req) {
         GenericResponse r = new GenericResponse();
 
@@ -43,5 +45,16 @@ public class DroneController {
     @GetMapping("/drones")
     public ResponseEntity<?> listAll() {
         return ResponseEntity.ok(droneService.listAll());
+    }
+
+    @GetMapping("/drones/{name}")
+    public ResponseEntity<?> listName(@PathVariable String name) {
+        Drone drone= new Drone();
+        drone = droneService.buscarDroneName(name);
+        if (drone != null){
+        
+        return ResponseEntity.ok(drone);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
