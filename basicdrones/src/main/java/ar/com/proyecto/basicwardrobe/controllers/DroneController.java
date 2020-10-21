@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,12 +50,48 @@ public class DroneController {
 
     @GetMapping("/drones/{name}")
     public ResponseEntity<?> listName(@PathVariable String name) {
-        Drone drone= new Drone();
+        Drone drone = new Drone();
         drone = droneService.buscarDroneName(name);
-        if (drone != null){
-        
-        return ResponseEntity.ok(drone);
+        if (drone != null) {
+
+            return ResponseEntity.ok(drone);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/drones/{id}")
+    public ResponseEntity<?> listId(@PathVariable int droneId) {
+        Drone drone = droneService.findId(droneId);
+        if (drone != null) {
+
+            return ResponseEntity.ok(drone);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/drones/{id}")
+    public ResponseEntity<GenericResponse> editDrone(@PathVariable int droneId, @RequestBody Drone req) {
+        GenericResponse r = new GenericResponse();
+
+        Drone drone = droneService.findId(droneId);
+        if (drone == null) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        boolean resultado = false;
+        resultado = droneService.update(drone, req);
+
+        if(resultado){
+        r.isOk = true;
+        r.id = drone.getDroneId();
+        r.message = "Se ha actualizado el drone " + drone.getDroneId();
+        return ResponseEntity.ok(r);
+    }else {
+
+        r.isOk = false;
+        r.message = "No se pudo actualizar el drone.";
+
+        return ResponseEntity.badRequest().body(r);
+    }
+}
 }

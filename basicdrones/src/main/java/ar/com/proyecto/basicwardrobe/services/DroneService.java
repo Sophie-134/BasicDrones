@@ -1,6 +1,7 @@
 package ar.com.proyecto.basicwardrobe.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,24 @@ public class DroneService {
     }
 
     public Drone buscarDroneName(String name) {
-     
+
         return droneRepo.findByName(name);
+    }
+
+    public Drone findId(int droneId) {
+        Optional<Drone> dr = droneRepo.findById(droneId);
+        if (dr.isPresent()) {
+            return dr.get();
+        }
+        return null;
+    }
+    public boolean update(Drone drone, Drone droneAct){
+
+        drone.setName(droneAct.getName());
+        drone.setMaxSpeed(droneAct.getMaxSpeed());
+        drone.setPropellers(droneAct.getPropellers());
+
+        droneRepo.save(drone);
+        return true;
     }
 }

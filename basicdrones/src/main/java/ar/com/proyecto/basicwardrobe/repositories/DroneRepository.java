@@ -11,4 +11,6 @@ public interface DroneRepository extends JpaRepository<Drone, Integer>{
 
     //@Query("select name from drone")
     Drone findByName(String name);
+
+    
 }
