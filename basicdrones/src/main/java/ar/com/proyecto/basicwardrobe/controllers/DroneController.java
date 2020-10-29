@@ -3,6 +3,7 @@ package ar.com.proyecto.basicwardrobe.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,5 +94,24 @@ public class DroneController {
 
         return ResponseEntity.badRequest().body(r);
     }
+}
+@DeleteMapping(value ="/drones/{id}")
+public ResponseEntity<GenericResponse> deleteDrone (@PathVariable int droneId) {
+    GenericResponse resp = new GenericResponse();
+
+    Drone drone = droneService.findId(droneId);
+
+    if (drone != null) {
+
+        droneService.deleteDrone(droneId);
+        
+
+    resp.isOk = true;
+    resp.id = drone.getDroneId();
+    resp.message = "Drone: " + drone.getName()+ " eliminado, felicidades.";
+
+    return ResponseEntity.ok(resp);
+}
+return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 }
 }

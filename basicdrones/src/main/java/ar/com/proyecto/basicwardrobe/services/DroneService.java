@@ -65,4 +65,7 @@ public class DroneService {
         droneRepo.save(drone);
         return true;
     }
+    public void deleteDrone(int droneId){
+        droneRepo.deleteById(droneId);
+    }
 }

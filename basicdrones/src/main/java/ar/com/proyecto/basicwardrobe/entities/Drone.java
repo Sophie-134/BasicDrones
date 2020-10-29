@@ -63,6 +63,7 @@ public class Drone {
         VELOCIDAD_NO_VALIDA,
         ID_NO_VALIDO,
         DRONE_INEXISTENTE,
-        INICIADA;
+        INICIADA,
+        ELIMINADO;
     }
 }
