@@ -49,7 +49,7 @@ public class DroneController {
         return ResponseEntity.ok(droneService.listAll());
     }
 
-    @GetMapping("/drones/{name}")
+    @GetMapping("/drones/name/{name}")
     public ResponseEntity<?> listName(@PathVariable String name) {
         Drone drone = new Drone();
         drone = droneService.buscarDroneName(name);
@@ -60,7 +60,7 @@ public class DroneController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/drones/{id}")
+    @GetMapping("/drones/{droneId}")
     public ResponseEntity<?> listId(@PathVariable int droneId) {
         Drone drone = droneService.findId(droneId);
         if (drone != null) {
@@ -70,7 +70,7 @@ public class DroneController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/drones/{id}")
+    @PutMapping("/drones/{droneId}")
     public ResponseEntity<GenericResponse> editDrone(@PathVariable int droneId, @RequestBody Drone req) {
         GenericResponse r = new GenericResponse();
 
@@ -95,7 +95,7 @@ public class DroneController {
         return ResponseEntity.badRequest().body(r);
     }
 }
-@DeleteMapping(value ="/drones/{id}")
+@DeleteMapping(value ="/drones/{droneId}")
 public ResponseEntity<GenericResponse> deleteDrone (@PathVariable int droneId) {
     GenericResponse resp = new GenericResponse();
 
